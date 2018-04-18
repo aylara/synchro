@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE nta PUBLIC '-//Uppaal Team//DTD Flat System 1.1//EN' 'http://www.it.uu.se/research/group/darts/uppaal/flat-1_2.dtd'>
+<nta>
+	<declaration>// Place global declarations here.
+clock c1,c2,c3;
+chan ps1,ps2;
+int peak1 = 0;
+int peak2 = 0;</declaration>
+	<template>
+		<name x="5" y="5">Template</name>
+		<parameter>int ts, int tc, int tm</parameter>
+		<declaration>// Place local declarations here
+bool computekey = false;
+int logPs = 0;
+
+</declaration>
+		<location id="id0" x="-195" y="-212">
+			<name x="-205" y="-246">E1</name>
+		</location>
+		<location id="id1" x="-399" y="-93">
+			<name x="-409" y="-127">E0</name>
+		</location>
+		<location id="id2" x="102" y="-76">
+			<name x="92" y="-110">E4</name>
+		</location>
+		<location id="id3" x="-51" y="-76">
+			<name x="-61" y="-110">E3</name>
+		</location>
+		<location id="id4" x="-229" y="144">
+			<name x="-239" y="110">E2</name>
+		</location>
+		<init ref="id1"/>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-76" y="-25">c1&gt;=ts</label>
+			<label kind="assignment" x="-93" y="-8">computekey := true</label>
+			<nail x="-50" y="8"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-211" y="25">c2&lt;=tm</label>
+			<label kind="synchronisation" x="-211" y="42">ps1?</label>
+			<label kind="assignment" x="-211" y="59">logPs:=logPs+1</label>
+			<nail x="-119" y="-25"/>
+		</transition>
+		<transition>
+			<source ref="id4"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-357" y="68">c2&gt;tm</label>
+			<nail x="-365" y="85"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id4"/>
+			<label kind="guard" x="-323" y="-34">c3&lt;=tc and c1&lt;=ts</label>
+			<label kind="synchronisation" x="-272" y="8">ps2?</label>
+			<label kind="assignment" x="-297" y="-17">c2:=0,c3:=0</label>
+			<nail x="-297" y="8"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-195" y="153">c1&gt;=ts</label>
+			<label kind="assignment" x="-272" y="178">computekey := true</label>
+			<nail x="-450" y="178"/>
+			<nail x="8" y="178"/>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id2"/>
+			<label kind="guard" x="0" y="-102">c1&gt;=ts</label>
+		</transition>
+		<transition>
+			<source ref="id3"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-245" y="-101">c1&lt;ts</label>
+			<label kind="assignment" x="-246" y="-85">c3:=0</label>
+			<nail x="-263" y="-59"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id3"/>
+			<label kind="guard" x="-119" y="-178">c2&lt;=tm</label>
+			<label kind="synchronisation" x="-102" y="-161">ps2?</label>
+			<label kind="assignment" x="-93" y="-144">logPs:=logPs+1</label>
+			<nail x="-110" y="-136"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id2"/>
+			<label kind="guard" x="-51" y="-212">c1&gt;=ts</label>
+			<label kind="assignment" x="-76" y="-229">computekey := true</label>
+			<nail x="-34" y="-187"/>
+		</transition>
+		<transition>
+			<source ref="id0"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-331" y="-127">c2&gt;tm</label>
+			<nail x="-297" y="-93"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id0"/>
+			<label kind="guard" x="-408" y="-212">c3&lt;=tc and c1&lt;=ts</label>
+			<label kind="synchronisation" x="-374" y="-161">ps1?</label>
+			<label kind="assignment" x="-391" y="-195">c2:=0,c3:=0</label>
+			<nail x="-314" y="-161"/>
+		</transition>
+		<transition>
+			<source ref="id1"/>
+			<target ref="id1"/>
+			<label kind="guard" x="-501" y="-153">c3&gt;tc</label>
+			<label kind="assignment" x="-561" y="-170">c1:=0,c2:=0,c3:=0</label>
+			<nail x="-493" y="-76"/>
+			<nail x="-501" y="-119"/>
+			<nail x="-433" y="-144"/>
+		</transition>
+	</template>
+	<template>
+		<name>PS1</name>
+		<declaration>clock t1;
+</declaration>
+		<location id="id5" x="-6902" y="-6902">
+			<name x="-6912" y="-6936">Inicio</name>
+		</location>
+		<init ref="id5"/>
+		<transition>
+			<source ref="id5"/>
+			<target ref="id5"/>
+			<label kind="synchronisation" x="-6774" y="-6953">ps1!</label>
+			<label kind="assignment" x="-6800" y="-6970">peak1:=peak1+1</label>
+			<nail x="-6698" y="-6944"/>
+			<nail x="-6757" y="-6817"/>
+		</transition>
+	</template>
+	<template>
+		<name>PS2</name>
+		<declaration>clock t1;
+</declaration>
+		<location id="id6" x="-282" y="-12">
+		</location>
+		<init ref="id6"/>
+		<transition>
+			<source ref="id6"/>
+			<target ref="id6"/>
+			<label kind="synchronisation" x="-305" y="-97">ps2!</label>
+			<label kind="assignment" x="-305" y="-80">peak2 := peak2+1</label>
+			<nail x="-323" y="-93"/>
+			<nail x="-187" y="-68"/>
+		</transition>
+	</template>
+	<system>// Place template instantiations here.
+Process = Template(300,4,1);
+
+signal1= PS1();
+//test = Test();
+signal2= PS2();
+// List one or more processes to be composed into a system.
+system Process,signal1,signal2;
+    </system>
+	<queries>
+		<query>
+			<formula>E&lt;&gt; c1==ts
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Process.E4 and c1==ts and Process.computekey
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (Process.E4 and Process.computekey)
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>A[] Process.logPs==0
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>A[] Process.logPs&gt;0
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Process.E3 and c3==0
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; Process.E3 and Process.logPs&gt;0
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>A[]  Process.E4
+			</formula>
+			<comment>
+			</comment>
+		</query>
+		<query>
+			<formula>E&lt;&gt; (Process.E4 and  (peak1==peak2 or peak1==peak2+1 or peak2==peak1+1) )
+			</formula>
+			<comment>
+			</comment>
+		</query>
+	</queries>
+</nta>
